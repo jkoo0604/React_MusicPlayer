@@ -10,7 +10,7 @@ const grabColors = async (imgUrl) => {
         a,
         imgData,
         colorsArr,
-        colorsArr2,
+        colorsArr2 = [],
         colorsRgb = {},
         colors = {};
     r = g = b = a = 0;
@@ -40,18 +40,17 @@ const grabColors = async (imgUrl) => {
         col = rgbToHex(r, g, b);
         colors['#' + col] = (colors['#' + col] || 0) + 1;
         colorsRgb['#' + col] = [r, g, b];
-        // grab most commonly occurring colors
     }
     console.log(colors);
     colorsArr = Object.entries(colors).sort((a, b) => b[1] - a[1]);
     // colorsArr.splice(5);
-    colorsArr2 = [
-        colorsArr[0],
-        colorsArr[500],
-        colorsArr[1000],
-        colorsArr[1500],
-        colorsArr[2000],
-    ];
+    // colorsArr2 = [
+    //     colorsArr[0],
+    //     colorsArr[500],
+    //     colorsArr[1000],
+    //     colorsArr[1500],
+    //     colorsArr[2000],
+    // ];
     // look at center of the image only
     // imgFile.onload = () => {
     //     w = imgFile.width / 3;
@@ -76,10 +75,46 @@ const grabColors = async (imgUrl) => {
     // };
     // imgFile.src = imgUrl;
     // console.log('top 5', colorsArr.length);
-    for (let i = 0; i < 5; i++) {
-        console.log(colorsRgb[colorsArr2[i][0]]);
+    // for (let i = 0; i < 5; i++) {
+    //     console.log(colorsRgb[colorsArr2[i][0]]);
+    // }
+    let i = 0;
+    let origin = colorsRgb[colorsArr[0][0]];
+    let diff = 0.7;
+    let arrLen = 3;
+    let maxDiff = 1;
+    let maxDiffCol;
+    console.log('origin', origin);
+    colorsArr2.push(colorsArr[0][0]);
+    // console.log(colorsArr[0][1]);
+    // colorsArr2.push(colorsArr[colorsArr.length - 1][0]);
+    // console.log(colorsArr[colorsArr.length - 1][1]);
+    while (colorsArr2.length < arrLen && i < colorsArr.length) {
+        let curr = colorsArr[i][0];
+        // console.log(origin, curr, colorsRgb[curr]);
+        // let rDiff =
+        //     (255 - Math.abs(colorsRgb[curr][0] - origin[0])) / 255 <= diff;
+        // let gDiff =
+        //     (255 - Math.abs(colorsRgb[curr][1] - origin[1])) / 255 <= diff;
+        // let aDiff =
+        //     (255 - Math.abs(colorsRgb[curr][2] - origin[2])) / 255 <= diff;
+        // if (rDiff + gDiff + aDiff >= 3) {
+        //     colorsArr2.push(curr);
+        // }
+        let rDiff = (255 - Math.abs(colorsRgb[curr][0] - origin[0])) / 255;
+        let gDiff = (255 - Math.abs(colorsRgb[curr][1] - origin[1])) / 255;
+        let aDiff = (255 - Math.abs(colorsRgb[curr][2] - origin[2])) / 255;
+        if ((rDiff + gDiff + aDiff) / 3 < maxDiff) {
+            maxDiff = (rDiff + gDiff + aDiff) / 3;
+            maxDiffCol = curr;
+        }
+        i++;
     }
-    return colorsArr2.map((c) => c[0]);
+    // if (colorsArr2.length === 1) {
+    //     colorsArr2.push(colorsArr[colorsArr.length - 1][0]);
+    // }
+    colorsArr2.push(maxDiffCol);
+    return colorsArr2;
 };
 
 const rgbToHex = (r, g, b) => {

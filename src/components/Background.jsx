@@ -11,19 +11,30 @@ import images from '../utils/images';
 const StyledBg = styled.div`
     width: 100%;
     height: 100%;
-    background: ${({ colors }) => `linear-gradient(-45deg, ${colors})`};
+    background: #fff;
+    background-image: ${({ colors }) => `linear-gradient(45deg, ${colors})`};
     background-size: 200% 200%;
-    animation: gradient 25s ease infinite;
+    animation: gradient 15s ease-in-out infinite alternate;
 
     @keyframes gradient {
         0% {
-            background-position: 0% 50%;
+            background-position: 0% 100%;
         }
-        50% {
-            background-position: 100% 50%;
+        // 50% {
+        //     background-position: 100% 50%;
+        // }
+        100% {
+            background-position: 100% 0%;
+        }
+    }
+    @keyframes gradient2 {
+        0% {
+            background-size: 100% 100%;
+            background-position: 0% 0%;
         }
         100% {
-            background-position: 0% 50%;
+            background-size: 200% 200%;
+            background-position: 50% 50%;
         }
     }
 

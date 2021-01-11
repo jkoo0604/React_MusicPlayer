@@ -18,8 +18,8 @@ const StyledContainer = styled.div`
 `;
 
 const Player = () => {
-    const [trackId, setTrackId] = useState(0);
-    const [imgId, setImgId] = useState(0);
+    const [trackId, setTrackId] = useState(5);
+    const [imgId, setImgId] = useState(5);
     const imgCount = Object.values(images).length;
     const trackCount = musicInfo.length;
 
