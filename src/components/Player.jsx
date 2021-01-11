@@ -24,17 +24,17 @@ const Player = () => {
     const trackCount = musicInfo.length;
 
     useEffect(() => {
-        let idx = Math.floor(Math.random() * (imgCount + 1));
-        setImgId(idx);
+        // let idx = Math.floor(Math.random() * (imgCount + 1));
+        setImgId(trackId);
     }, [trackId, imgCount]);
 
     return (
         <StyledContainer>
-            <Background image={images[imgId]} />
+            <Background imgId={imgId} />
             <Visualizer
                 trackId={trackId}
                 setTrackId={setTrackId}
-                image={images[imgId]}
+                imgId={imgId}
                 trackCount={trackCount}
             />
         </StyledContainer>
