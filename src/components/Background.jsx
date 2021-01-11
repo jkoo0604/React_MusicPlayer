@@ -43,29 +43,29 @@ const StyledBg = styled.div`
     }
 `;
 
-const Background = ({ imgId }) => {
+const Background = ({ idx }) => {
     const [loading, setLoading] = useState(true);
     const [colors, setColors] = useState([]);
-    console.log(images[`img${imgId + 1}`]);
+    console.log(images[`img${idx + 1}`]);
 
     useEffect(() => {
         // get dominant colors
         // set colors
         const colorGrab = async () => {
             setLoading(true);
-            let imgColors = await grabColors(images[`img${imgId + 1}`]['file']);
+            let imgColors = await grabColors(images[`img${idx + 1}`]['file']);
             console.log(imgColors);
             setColors(imgColors);
             setLoading(false);
         };
         colorGrab();
-    }, [imgId]);
+    }, [idx]);
 
     return loading ? (
         <></>
     ) : (
         <StyledBg colors={colors.join(', ')}>
-            <img src={images[`img${imgId + 1}`]['file']} alt="albumart" />
+            <img src={images[`img${idx + 1}`]['file']} alt="albumart" />
         </StyledBg>
     );
 };

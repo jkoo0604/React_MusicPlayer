@@ -9,7 +9,6 @@ import styled from 'styled-components';
 
 import Background from './Background';
 import Visualizer from './Visualizer';
-import images from '../utils/images';
 import musicInfo from '../utils/musicInfo';
 
 const StyledContainer = styled.div`
@@ -18,23 +17,15 @@ const StyledContainer = styled.div`
 `;
 
 const Player = () => {
-    const [trackId, setTrackId] = useState(5);
-    const [imgId, setImgId] = useState(5);
-    const imgCount = Object.values(images).length;
+    const [idx, setIdx] = useState(0);
     const trackCount = musicInfo.length;
-
-    useEffect(() => {
-        // let idx = Math.floor(Math.random() * (imgCount + 1));
-        setImgId(trackId);
-    }, [trackId, imgCount]);
 
     return (
         <StyledContainer>
-            <Background imgId={imgId} />
+            <Background idx={idx} />
             <Visualizer
-                trackId={trackId}
-                setTrackId={setTrackId}
-                imgId={imgId}
+                idx={idx}
+                setIdx={setIdx}
                 trackCount={trackCount}
             />
         </StyledContainer>

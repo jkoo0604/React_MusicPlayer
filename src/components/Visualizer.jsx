@@ -20,7 +20,7 @@ const VizControl = styled.div`
     height: 40%;
 `;
 
-const Visualizer = (trackId, setTrackId, imgId, trackCount) => {
+const Visualizer = ({idx, setIdx, trackCount}) => {
     return (
         <VizContainer>
             <VizCanvas></VizCanvas>
