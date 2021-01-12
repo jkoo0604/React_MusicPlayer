@@ -11,6 +11,7 @@ import images from '../utils/images';
 const StyledBg = styled.div`
     width: 100%;
     height: 100%;
+    position: absolute;
     background: #fff;
     background-image: ${({ colors }) => `linear-gradient(45deg, ${colors})`};
     background-size: 200% 200%;
