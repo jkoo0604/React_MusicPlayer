@@ -16,7 +16,7 @@ const cWidth = 500;
 const cHeight = 300;
 const radius = 50;
 const barWidth = 2;
-let freqArr;
+// let freqArr;
 
 const VizContainer = styled.div`
     height: 80%;
@@ -63,8 +63,8 @@ const Visualizer = ({ idx, setIdx, trackCount }) => {
         newAnalyser.fftSize = 512;
 
         const bufferLength = newAnalyser.frequencyBinCount;
-        // const freqData = new Uint8Array(bufferLength);
-        freqArr = new Uint8Array(bufferLength);
+        const freqData = new Uint8Array(bufferLength);
+        // freqArr = new Uint8Array(bufferLength);
 
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
@@ -82,7 +82,7 @@ const Visualizer = ({ idx, setIdx, trackCount }) => {
 
         setAudio(song);
         setSongContext(audioContext);
-        // setSongData(freqData);
+        setSongData(freqData);
         setAnalyser(newAnalyser);
         setSource(src);
         // setTitle(musicInfo[idx]['title']);
@@ -93,7 +93,7 @@ const Visualizer = ({ idx, setIdx, trackCount }) => {
         //     analyser.disconnect();
         //     source.disconnect();
         // };
-        return cleanUp;
+        // return cleanUp;
     }, [idx]);
 
     const togglePlay = () => {
@@ -122,8 +122,8 @@ const Visualizer = ({ idx, setIdx, trackCount }) => {
         // console.log(freqArr);
 
         for (let i = 0; i < numBars; i++) {
-            // barHeight = songData[i] * 0.5;
-            barHeight = freqArr[i] * 0.5;
+            barHeight = songData[i] * 0.5;
+            // barHeight = freqArr[i] * 0.5;
 
             let rads = (Math.PI * 2) / numBars;
             let x = centerX + Math.cos(rads * i) * radius;
@@ -139,15 +139,17 @@ const Visualizer = ({ idx, setIdx, trackCount }) => {
         visualize();
         // let newArray = new Uint8Array(analyser.frequencyBinCount);
         // analyser.getByteTimeDomainData(newArray);
-        analyser.getByteTimeDomainData(freqArr);
-        // setSongData(newArray);
+        // analyser.getByteTimeDomainData(freqArr);
+        analyser.getByteTimeDomainData(songData);
+        // console.log(newArray.current.buffer);
+        // setSongData(newArray.buffer);
         rafRef.current = requestAnimationFrame(tick);
     };
 
     const cleanUp = () => {
         cancelAnimationFrame(rafRef.current);
-        analyser.disconnect();
-        source.disconnect();
+        // analyser.disconnect();
+        // source.disconnect();
     }
 
     const nextTrack = () => {

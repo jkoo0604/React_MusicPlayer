@@ -70,7 +70,7 @@ const Background = ({ idx, setIdx }) => {
         <></>
     ) : (
         <StyledBg colors={colors.join(', ')}>
-            <img src={images[`img${idx + 1}`]['file']} alt="albumart" onClick={nextImg}/>
+            {/* <img src={images[`img${idx + 1}`]['file']} alt="albumart" onClick={nextImg}/> */}
         </StyledBg>
     );
 };

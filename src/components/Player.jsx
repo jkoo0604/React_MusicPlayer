@@ -17,17 +17,17 @@ const StyledContainer = styled.div`
 `;
 
 const Player = () => {
-    const [idx, setIdx] = useState(0);
+    const [idx, setIdx] = useState(1);
     const trackCount = musicInfo.length;
 
     return (
         <StyledContainer>
             <Background idx={idx} setIdx={setIdx} />
-            {/* <Visualizer
+            <Visualizer
                 idx={idx}
                 setIdx={setIdx}
                 trackCount={trackCount}
-            /> */}
+            />
         </StyledContainer>
     );
 };
