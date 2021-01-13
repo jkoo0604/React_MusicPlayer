@@ -87,12 +87,12 @@ const Visualizer = ({ idx, setIdx, trackCount }) => {
         setSource(src);
         // setTitle(musicInfo[idx]['title']);
         // setArtist(musicInfo[idx]['artist']);
-        // return () => {
-        //     // console.log(analyser);
-        //     cancelAnimationFrame(rafRef.current);
-        //     analyser.disconnect();
-        //     source.disconnect();
-        // };
+        return () => {
+            console.log('cleaning up');
+            cancelAnimationFrame(rafRef.current);
+            newAnalyser.disconnect();
+            src.disconnect();
+        };
         // return cleanUp;
     }, [idx]);
 
@@ -153,8 +153,13 @@ const Visualizer = ({ idx, setIdx, trackCount }) => {
     }
 
     const nextTrack = () => {
-        cleanUp();
+        // cleanUp();
         setIdx(idx + 1);
+    }
+
+    const removePlayer = () => {
+        // cleanUp();
+        setIdx(-1);
     }
 
     return (
@@ -166,6 +171,7 @@ const Visualizer = ({ idx, setIdx, trackCount }) => {
                 <div onClick={togglePlay}>Placeholder Txt</div>
                 <img src={images[`img${idx + 1}`]['file']} alt="albumart" />
                 <div onClick={nextTrack}>Next</div>
+                <div onClick={removePlayer}>Stop</div>
             </VizControl>
         </VizContainer>
     );
