@@ -158,7 +158,11 @@ const Visualizer = ({ idx, setIdx, trackCount }) => {
 
     const nextTrack = () => {
         // cleanUp();
-        setIdx(idx + 1);
+        if (idx === trackCount - 1) {
+            setIdx(0);
+        } else {
+            setIdx(idx + 1);
+        }
     }
 
     const removePlayer = () => {
