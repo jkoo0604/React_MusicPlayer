@@ -39,7 +39,7 @@ const VizControl = styled.div`
     }
 `;
 
-const Visualizer = ({ idx, setIdx, trackCount }) => {
+const Visualizer = ({ idx, setIdx, autoplay, setAutoplay, bgLoaded, trackCount }) => {
     // const [paused, setPaused] = useState(true);
     const [audio, setAudio] = useState(null);
     const [songData, setSongData] = useState(null);
@@ -100,6 +100,16 @@ const Visualizer = ({ idx, setIdx, trackCount }) => {
         // return cleanUp;
     }, [idx]);
 
+    useEffect(() => {
+        if (autoplay && bgLoaded) {
+            console.log('inside useeffect, togglplay');
+            togglePlay();
+        } else {
+            console.log('autoplay false');
+        }
+
+    }, [bgLoaded]);
+
     const togglePlay = () => {
         if (audio.paused) {
             if (songContext.state === 'suspended') songContext.resume();
@@ -158,6 +168,7 @@ const Visualizer = ({ idx, setIdx, trackCount }) => {
 
     const nextTrack = () => {
         // cleanUp();
+        setAutoplay(true);
         if (idx === trackCount - 1) {
             setIdx(0);
         } else {

@@ -44,8 +44,7 @@ const StyledBg = styled.div`
     }
 `;
 
-const Background = ({ idx, setIdx }) => {
-    const [loading, setLoading] = useState(true);
+const Background = ({ idx, setIdx, bgLoaded, setBgLoaded }) => {
     const [colors, setColors] = useState([]);
     console.log(images[`img${idx + 1}`]);
 
@@ -53,11 +52,11 @@ const Background = ({ idx, setIdx }) => {
         // get dominant colors
         // set colors
         const colorGrab = async () => {
-            setLoading(true);
+            setBgLoaded(false);
             let imgColors = await grabColors(images[`img${idx + 1}`]['file']);
             console.log(imgColors);
             setColors(imgColors);
-            setLoading(false);
+            setBgLoaded(true);
         };
         colorGrab();
     }, [idx]);
@@ -66,7 +65,7 @@ const Background = ({ idx, setIdx }) => {
         setIdx(idx + 1);
     }
 
-    return loading ? (
+    return !bgLoaded ? (
         <></>
     ) : (
         <StyledBg colors={colors.join(', ')}>

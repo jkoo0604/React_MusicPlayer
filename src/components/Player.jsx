@@ -17,17 +17,22 @@ const StyledContainer = styled.div`
 `;
 
 const Player = () => {
-    const [idx, setIdx] = useState(1);
+    const [idx, setIdx] = useState(0);
+    const [autoplay, setAutoplay] = useState(false);
+    const [bgLoaded, setBgLoaded] = useState(false);
     const trackCount = musicInfo.length;
 
     return (
         <StyledContainer>
             {
                 idx === -1 ? <></> : <>
-                <Background idx={idx} setIdx={setIdx} />
+                <Background idx={idx} setIdx={setIdx} bgLoaded={bgLoaded} setBgLoaded={setBgLoaded} />
             <Visualizer
                 idx={idx}
                 setIdx={setIdx}
+                autoplay={autoplay}
+                setAutoplay={setAutoplay}
+                bgLoaded={bgLoaded}
                 trackCount={trackCount}
             /></>
             }
