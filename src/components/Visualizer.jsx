@@ -87,12 +87,13 @@ const Visualizer = ({ idx, setIdx, trackCount }) => {
         setSource(src);
         // setTitle(musicInfo[idx]['title']);
         // setArtist(musicInfo[idx]['artist']);
-        return () => {
-            // console.log(analyser);
-            cancelAnimationFrame(rafRef.current);
-            analyser.disconnect();
-            source.disconnect();
-        };
+        // return () => {
+        //     // console.log(analyser);
+        //     cancelAnimationFrame(rafRef.current);
+        //     analyser.disconnect();
+        //     source.disconnect();
+        // };
+        return cleanUp;
     }, [idx]);
 
     const togglePlay = () => {
@@ -143,14 +144,26 @@ const Visualizer = ({ idx, setIdx, trackCount }) => {
         rafRef.current = requestAnimationFrame(tick);
     };
 
+    const cleanUp = () => {
+        cancelAnimationFrame(rafRef.current);
+        analyser.disconnect();
+        source.disconnect();
+    }
+
+    const nextTrack = () => {
+        cleanUp();
+        setIdx(idx + 1);
+    }
+
     return (
         <VizContainer>
             <VizCanvas>
                 <canvas ref={canvasRef} width={cWidth} height={cHeight} />
             </VizCanvas>
-            <VizControl onClick={togglePlay}>
-                Placeholder Txt
+            <VizControl>
+                <div onClick={togglePlay}>Placeholder Txt</div>
                 <img src={images[`img${idx + 1}`]['file']} alt="albumart" />
+                <div onClick={nextTrack}>Next</div>
             </VizControl>
         </VizContainer>
     );

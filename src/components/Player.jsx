@@ -22,12 +22,12 @@ const Player = () => {
 
     return (
         <StyledContainer>
-            <Background idx={idx} />
-            <Visualizer
+            <Background idx={idx} setIdx={setIdx} />
+            {/* <Visualizer
                 idx={idx}
                 setIdx={setIdx}
                 trackCount={trackCount}
-            />
+            /> */}
         </StyledContainer>
     );
 };

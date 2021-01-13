@@ -44,7 +44,7 @@ const StyledBg = styled.div`
     }
 `;
 
-const Background = ({ idx }) => {
+const Background = ({ idx, setIdx }) => {
     const [loading, setLoading] = useState(true);
     const [colors, setColors] = useState([]);
     console.log(images[`img${idx + 1}`]);
@@ -62,11 +62,15 @@ const Background = ({ idx }) => {
         colorGrab();
     }, [idx]);
 
+    const nextImg = () => {
+        setIdx(idx + 1);
+    }
+
     return loading ? (
         <></>
     ) : (
         <StyledBg colors={colors.join(', ')}>
-            {/* <img src={images[`img${idx + 1}`]['file']} alt="albumart" /> */}
+            <img src={images[`img${idx + 1}`]['file']} alt="albumart" onClick={nextImg}/>
         </StyledBg>
     );
 };
