@@ -11,11 +11,11 @@ import musicInfo from '../utils/musicInfo';
 import images from '../utils/images';
 import drawBar from '../utils/drawBar';
 
-const numBars = 150;
+const numBars = 100;
 const cWidth = 500;
 const cHeight = 300;
 const radius = 50;
-const barWidth = 2;
+const barWidth = 5;
 // let freqArr;
 
 const VizContainer = styled.div`
@@ -60,7 +60,8 @@ const Visualizer = ({ idx, setIdx, trackCount }) => {
 
         src.connect(newAnalyser);
         newAnalyser.connect(audioContext.destination);
-        newAnalyser.fftSize = 512;
+        newAnalyser.fftSize = 256;
+        newAnalyser.smoothingTimeConstant = 1;
 
         const bufferLength = newAnalyser.frequencyBinCount;
         const freqData = new Uint8Array(bufferLength);
@@ -87,11 +88,14 @@ const Visualizer = ({ idx, setIdx, trackCount }) => {
         setSource(src);
         // setTitle(musicInfo[idx]['title']);
         // setArtist(musicInfo[idx]['artist']);
+        song.addEventListener('ended', nextTrack);
+
         return () => {
             console.log('cleaning up');
             cancelAnimationFrame(rafRef.current);
             newAnalyser.disconnect();
             src.disconnect();
+            song.removeEventListener('ended', nextTrack);
         };
         // return cleanUp;
     }, [idx]);
