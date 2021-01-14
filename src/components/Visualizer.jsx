@@ -13,21 +13,32 @@ import drawBar from '../utils/drawBar';
 
 const numBars = 100;
 const cWidth = 500;
-const cHeight = 300;
-const radius = 50;
+const cHeight = 500;
+const radius = 100;
 const barWidth = 5;
 // let freqArr;
 
 const VizContainer = styled.div`
-    height: 80%;
-    width: 80%;
+    // height: 80%;
+    // width: 80%;
     z-index: 5;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
 `;
 
 const VizCanvas = styled.div`
     // height: 60%;
     // position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: ${cWidth}px;
+    height: ${cHeight}px;
+    border-radius: 50%;
+    background-color: rgba(0,0,0,0.1);
 `;
 
 const VizControl = styled.div`
@@ -67,17 +78,18 @@ const Visualizer = ({ idx, setIdx, autoplay, setAutoplay, bgLoaded, trackCount }
         const freqData = new Uint8Array(bufferLength);
         // freqArr = new Uint8Array(bufferLength);
 
-        const canvas = canvasRef.current;
-        const ctx = canvas.getContext('2d');
+        // const canvas = canvasRef.current;
+        // const ctx = canvas.getContext('2d');
 
-        const centerX = cWidth / 2;
-        const centerY = cHeight / 2;
+        // const centerX = cWidth / 2;
+        // const centerY = cHeight / 2;
 
-        ctx.beginPath();
-        ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
-        ctx.lineWidth = 1;
-        ctx.stroke();
-        ctx.closePath();
+        // ctx.beginPath();
+        // ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+        // ctx.lineWidth = 1;
+        // ctx.strokeStyle = 'rgba(255, 255, 255, 0)';
+        // ctx.stroke();
+        // ctx.closePath();
 
         // console.log(freqArr);
 
@@ -128,13 +140,24 @@ const Visualizer = ({ idx, setIdx, autoplay, setAutoplay, bgLoaded, trackCount }
         const ctx = canvas.getContext('2d');
         const centerX = cWidth / 2;
         const centerY = cHeight / 2;
+        let offsetY = 20;
         let barHeight;
 
+        // clear canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillText('', centerX, centerY - offsetY);
+        ctx.fillText('', centerX, centerY);
+
+        // display song info
+        ctx.textBaseline = 'top';
+        ctx.textAlign = 'center';
+        ctx.fillText(musicInfo[idx]['artist'], centerX, centerY - offsetY);
+        ctx.fillText(musicInfo[idx]['title'], centerX, centerY);
 
         // console.log(songData);
         // console.log(freqArr);
 
+        // redraw bars
         for (let i = 0; i < numBars; i++) {
             barHeight = songData[i] * 0.5;
             // barHeight = freqArr[i] * 0.5;
