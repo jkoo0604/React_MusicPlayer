@@ -61,11 +61,12 @@ const VizControl = styled.div`
 
 const VizAlbum = styled.div`
     height: 200px;
-    width: 200px;
+    width: 250px;
     margin: 20px;
     display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
     
     img {
         border-radius: 4px;
@@ -77,7 +78,10 @@ const VizAlbum = styled.div`
 `;
 
 const VizAlbumText = styled.div`
-
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 15px 0px;
 `;
 
 const Visualizer = ({ idx, setIdx, autoplay, setAutoplay, bgLoaded, trackCount }) => {
@@ -261,6 +265,9 @@ const Visualizer = ({ idx, setIdx, autoplay, setAutoplay, bgLoaded, trackCount }
                 <img src={iconNext} alt='next' onClick={nextTrack} />
             </VizControl> 
             <VizAlbum>
+                <VizAlbumText>
+                    {musicInfo[idx]['album']} ({musicInfo[idx]['year']})
+                </VizAlbumText>
                 {/* <div onClick={togglePlay}>Placeholder Txt</div>
                 <div onClick={nextTrack}>Next</div>
                 <div onClick={removePlayer}>Stop</div> */}
