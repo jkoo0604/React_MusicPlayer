@@ -19,7 +19,8 @@ const numBars = 100;
 const cWidth = 500;
 const cHeight = 500;
 const radius = 150;
-const barWidth = 5;
+const barWidth = 2;
+const barSpacing = 5;
 // let freqArr;
 
 const VizContainer = styled.div`
@@ -106,8 +107,8 @@ const Visualizer = ({ idx, setIdx, autoplay, setAutoplay, bgLoaded, trackCount }
 
         src.connect(newAnalyser);
         newAnalyser.connect(audioContext.destination);
-        newAnalyser.fftSize = 256;
-        newAnalyser.smoothingTimeConstant = 1;
+        newAnalyser.fftSize = 512;
+        newAnalyser.smoothingTimeConstant = 0.6;
 
         const bufferLength = newAnalyser.frequencyBinCount;
         const freqData = new Uint8Array(bufferLength);
@@ -178,7 +179,7 @@ const Visualizer = ({ idx, setIdx, autoplay, setAutoplay, bgLoaded, trackCount }
         const centerX = cWidth / 2;
         const centerY = cHeight / 2;
         let offsetY = 30;
-        let barHeight;
+        let barHeight, maxBarNum, slicedPercent, barNum, freqJump;
 
         // clear canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -197,6 +198,28 @@ const Visualizer = ({ idx, setIdx, autoplay, setAutoplay, bgLoaded, trackCount }
         
         // console.log(songData);
         // console.log(freqArr);
+        maxBarNum = Math.floor((radius * 2 * Math.PI) / (barWidth + barSpacing));
+        slicedPercent = Math.floor((maxBarNum * 25) / 100);
+        barNum = maxBarNum - slicedPercent;
+        freqJump = Math.floor(songData.length / maxBarNum);
+
+        // redraw bars
+        // for (let i = 0; i < barNum; i++) { 
+        //     barHeight = 2;
+        //     let amplitude = songData[i * freqJump];
+        //     let alpha = (i * 2 * Math.PI) / maxBarNum;
+        //     let beta = (3 * 45 - barWidth) * Math.PI / 180;
+        //     let x = 0;
+        //     let y = radius - (amplitude / 12 - barHeight);
+        //     let w = barWidth;
+        //     let h = amplitude / 6 + barHeight;
+            
+        //     ctx.save();
+        //     ctx.translate(centerX + barSpacing, centerY + barSpacing);
+        //     ctx.rotate(alpha - beta);
+        //     ctx.fillRect(x, y, w, h);
+        //     ctx.restore();
+        // }
 
         // redraw bars
         for (let i = 0; i < numBars; i++) {
@@ -215,10 +238,11 @@ const Visualizer = ({ idx, setIdx, autoplay, setAutoplay, bgLoaded, trackCount }
 
     const tick = () => {
         visualize();
+        // analyser.getByteTimeDomainData(songData);
+        analyser.getByteFrequencyData(songData);
         // let newArray = new Uint8Array(analyser.frequencyBinCount);
         // analyser.getByteTimeDomainData(newArray);
         // analyser.getByteTimeDomainData(freqArr);
-        analyser.getByteTimeDomainData(songData);
         // console.log(newArray.current.buffer);
         // setSongData(newArray.buffer);
         rafRef.current = requestAnimationFrame(tick);
