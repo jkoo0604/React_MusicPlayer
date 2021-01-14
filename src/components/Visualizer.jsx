@@ -31,6 +31,7 @@ const VizContainer = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    padding-top: 10px;
 `;
 
 const VizCanvas = styled.div`
@@ -59,9 +60,18 @@ const VizControl = styled.div`
 `;
 
 const VizAlbum = styled.div`
+    height: 200px;
+    width: 200px;
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    
     img {
-        max-height: 200px;
-        max-width: 200px;
+        border-radius: 4px;
+        max-height: 100%;
+        max-width: 100%;
+        box-shadow: 0 0 15px 6px rgba(255, 255, 255, 0.15);
     }
 `;
 
