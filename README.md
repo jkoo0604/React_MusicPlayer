@@ -1,4 +1,4 @@
-# Music Player
+# Music Player ([Demo](https://music-player-a7fe9.web.app/))
 
 ### Audio visualizer with dynamic background
 
