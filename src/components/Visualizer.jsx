@@ -23,15 +23,15 @@ const barWidth = 5;
 // let freqArr;
 
 const VizContainer = styled.div`
-    // height: 80%;
-    // width: 80%;
+    height: 100%;
+    width: 100%;
     z-index: 5;
     position: relative;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
-    padding-top: 10px;
+    padding-top: 30px;
 `;
 
 const VizCanvas = styled.div`
@@ -48,7 +48,7 @@ const VizCanvas = styled.div`
 
 const VizControl = styled.div`
     position: absolute;
-    top: 300px;
+    top: 335px;
     left: calc((100vw / 2) - 100px);
     width: 200px;
     display: flex;
@@ -71,8 +71,13 @@ const VizAlbum = styled.div`
         border-radius: 4px;
         max-height: 100%;
         max-width: 100%;
-        box-shadow: 0 0 15px 6px rgba(255, 255, 255, 0.15);
+        box-shadow: 0 10px 80px 20px rgba(255, 255, 255, 0.15), 2px 2px 8px -2px rgba(0, 0, 0, 1);
+        // box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
     }
+`;
+
+const VizAlbumText = styled.div`
+
 `;
 
 const Visualizer = ({ idx, setIdx, autoplay, setAutoplay, bgLoaded, trackCount }) => {
@@ -179,11 +184,11 @@ const Visualizer = ({ idx, setIdx, autoplay, setAutoplay, bgLoaded, trackCount }
         // display song info
         ctx.textBaseline = 'top';
         ctx.textAlign = 'center';
-        ctx.font = '24px Verdana';
+        ctx.font = 'bold 24px Montserrat';
         ctx.fillStyle = 'rgba(255, 255, 255, 1)';
         ctx.fillText(musicInfo[idx]['title'], centerX, centerY - offsetY);
 
-        ctx.font = '16px Verdana';
+        ctx.font = '16px Montserrat';
         ctx.fillText(musicInfo[idx]['artist'], centerX, centerY);
         
         // console.log(songData);

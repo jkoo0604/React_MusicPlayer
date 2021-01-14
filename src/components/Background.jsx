@@ -12,7 +12,7 @@ const StyledBg = styled.div`
     width: 100%;
     height: 100%;
     position: absolute;
-    background: #fff;
+    background: #000;
     background-image: ${({ colors }) => `linear-gradient(45deg, ${colors})`};
     background-size: 200% 200%;
     animation: gradient 15s ease-in-out infinite alternate;
@@ -65,9 +65,14 @@ const Background = ({ idx, setIdx, bgLoaded, setBgLoaded }) => {
         setIdx(idx + 1);
     }
 
-    return !bgLoaded ? (
-        <></>
-    ) : (
+    // return !bgLoaded ? (
+    //     <StyledBg></StyledBg>
+    // ) : (
+    //     <StyledBg colors={colors.join(', ')}>
+    //         {/* <img src={images[`img${idx + 1}`]['file']} alt="albumart" onClick={nextImg}/> */}
+    //     </StyledBg>
+    // );
+    return (
         <StyledBg colors={colors.join(', ')}>
             {/* <img src={images[`img${idx + 1}`]['file']} alt="albumart" onClick={nextImg}/> */}
         </StyledBg>
