@@ -1,17 +1,3 @@
-// creact visualizer for audio
-// get image data from prop (sent by player)
-// get current track from prop (sent by player)
-// display circular visualizer with title, artist, and album image in the center?
-// or title and artist only in the center with album image and control below
-
-// speed up background color movement
-// padding below album image
-// white space at the bottom
-// controll button hover action (scale up)
-// album image white box shadow cut off at enge of outer div
-// song title and artist pixelated (use div?)
-// add credits (music, image, icons)
-
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
@@ -28,9 +14,7 @@ const cWidth = 500;
 const cHeight = 500;
 const radius = 150;
 const barWidth = 15;
-const barSpacing = 5;
 const offsetY = 30;
-// let freqArr;
 
 const VizContainer = styled.div`
     height: 100%;
@@ -45,15 +29,13 @@ const VizContainer = styled.div`
 `;
 
 const VizCanvas = styled.div`
-    // height: 60%;
-    // position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     width: ${cWidth}px;
     height: ${cHeight}px;
     border-radius: 50%;
-    background-color: rgba(0,0,0,0.1);
+    background-color: rgba(0, 0, 0, 0.1);
 `;
 
 const VizControl = styled.div`
@@ -66,7 +48,6 @@ const VizControl = styled.div`
 
     img {
         height: 24px;
-        // transition: all 0.2s ease-in-out;
     }
 
     img:hover {
@@ -87,13 +68,13 @@ const VizAlbum = styled.div`
     align-items: center;
     flex-direction: column;
     padding-bottom: 30px;
-    
+
     img {
         border-radius: 4px;
         max-height: 200px;
         max-width: 100%;
-        box-shadow: 0 10px 60px 20px rgba(255, 255, 255, 0.15), 2px 2px 8px -2px rgba(0, 0, 0, 1);
-        // box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+        box-shadow: 0 10px 60px 20px rgba(255, 255, 255, 0.15),
+            2px 2px 8px -2px rgba(0, 0, 0, 1);
     }
 `;
 
@@ -104,17 +85,20 @@ const VizAlbumText = styled.div`
     margin: 15px 0px;
 `;
 
-const Visualizer = ({ idx, setIdx, autoplay, setAutoplay, bgLoaded, trackCount }) => {
-    // const [paused, setPaused] = useState(true);
+const Visualizer = ({
+    idx,
+    setIdx,
+    autoplay,
+    setAutoplay,
+    bgLoaded,
+    trackCount,
+}) => {
     const [audio, setAudio] = useState(null);
     const [songData, setSongData] = useState(null);
-    // const [dataArray, setDataArray] = useState(null);
     const [analyser, setAnalyser] = useState(null);
     const [source, setSource] = useState(null);
     const [songContext, setSongContext] = useState(null);
     const [playing, setPlaying] = useState(false);
-    // const [title, setTitle] = useState('');
-    // const [artist, setArtist] = useState('');
     const canvasRef = useRef();
     const rafRef = useRef();
 
@@ -131,7 +115,6 @@ const Visualizer = ({ idx, setIdx, autoplay, setAutoplay, bgLoaded, trackCount }
 
         const bufferLength = newAnalyser.frequencyBinCount;
         const freqData = new Uint8Array(bufferLength);
-        // freqArr = new Uint8Array(bufferLength);
 
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
@@ -146,46 +129,34 @@ const Visualizer = ({ idx, setIdx, autoplay, setAutoplay, bgLoaded, trackCount }
         ctx.stroke();
         ctx.closePath();
 
-        // console.log(freqArr);
-
         setAudio(song);
         setSongContext(audioContext);
         setSongData(freqData);
         setAnalyser(newAnalyser);
         setSource(src);
-        // setTitle(musicInfo[idx]['title']);
-        // setArtist(musicInfo[idx]['artist']);
         song.addEventListener('ended', nextTrack);
 
         return () => {
-            console.log('cleaning up');
             cancelAnimationFrame(rafRef.current);
             newAnalyser.disconnect();
             src.disconnect();
             song.removeEventListener('ended', nextTrack);
         };
-        // return cleanUp;
     }, [idx]);
 
     useEffect(() => {
         if (autoplay && bgLoaded) {
-            console.log('inside useeffect, togglplay');
             togglePlay();
-        } else {
-            console.log('autoplay false');
         }
-
     }, [bgLoaded]);
 
     const togglePlay = () => {
         if (audio.paused) {
             if (songContext.state === 'suspended') songContext.resume();
-            console.log('playing');
             setPlaying(true);
             audio.play();
             rafRef.current = requestAnimationFrame(tick);
         } else {
-            console.log('pausing');
             setPlaying(false);
             audio.pause();
             cancelAnimationFrame(rafRef.current);
@@ -197,14 +168,12 @@ const Visualizer = ({ idx, setIdx, autoplay, setAutoplay, bgLoaded, trackCount }
         const ctx = canvas.getContext('2d');
         const centerX = cWidth / 2;
         const centerY = cHeight / 2;
-        let barHeight, maxBarNum, slicedPercent, barNum, freqJump;
+        let barHeight;
 
-        // clear canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.fillText('', centerX, centerY - offsetY);
         ctx.fillText('', centerX, centerY);
 
-        // display song info
         ctx.textBaseline = 'top';
         ctx.textAlign = 'center';
         ctx.font = 'bold 24px Montserrat';
@@ -213,50 +182,15 @@ const Visualizer = ({ idx, setIdx, autoplay, setAutoplay, bgLoaded, trackCount }
 
         ctx.font = '16px Montserrat';
         ctx.fillText(musicInfo[idx]['artist'], centerX, centerY);
-        
-        // console.log(songData);
-        // console.log(freqArr);
-        maxBarNum = Math.floor((radius * 2 * Math.PI) / (barWidth + barSpacing));
-        slicedPercent = Math.floor((maxBarNum * 25) / 100);
-        barNum = maxBarNum - slicedPercent;
-        freqJump = Math.floor(songData.length / maxBarNum);
 
-        // redraw bars
-        // for (let i = 0; i < barNum; i++) { 
-        //     barHeight = 2;
-        //     let amplitude = songData[i * freqJump];
-        //     let alpha = (i * 2 * Math.PI) / maxBarNum;
-        //     let beta = (3 * 45 - barWidth) * Math.PI / 180;
-        //     let x = 0;
-        //     let y = radius - (amplitude / 12 - barHeight);
-        //     let w = barWidth;
-        //     let h = amplitude / 6 + barHeight;
-            
-        //     ctx.save();
-        //     ctx.translate(centerX + barSpacing, centerY + barSpacing);
-        //     ctx.rotate(alpha - beta);
-        //     ctx.fillRect(x, y, w, h);
-        //     ctx.restore();
-        // }
-
-        // redraw bars
         for (let i = 0; i < numBars; i++) {
             barHeight = songData[i] * 0.4;
-            // barHeight = freqArr[i] * 0.5;
 
             let rads = (Math.PI * 2) / numBars;
-            let y = centerX - Math.cos((rads * i + 0)) * radius;
-            let x = centerY + Math.sin((rads * i + 0)) * radius;
-            let y_end = centerX - Math.cos((rads * i + 0)) * (radius + barHeight);
-            let x_end = centerY + Math.sin((rads * i + 0)) * (radius + barHeight);
-            // let x = centerX + Math.cos((rads + 180) * i) * radius;
-            // let y = centerY + Math.sin((rads + 180) * i) * radius;
-            // let x_end = centerX + Math.cos((rads + 180) * i) * (radius + barHeight);
-            // let y_end = centerY + Math.sin((rads + 180) * i) * (radius + barHeight);
-            // let x = centerX + Math.cos(rads * i) * radius;
-            // let y = centerY + Math.sin(rads * i) * radius;
-            // let x_end = centerX + Math.cos(rads * i) * (radius + barHeight);
-            // let y_end = centerY + Math.sin(rads * i) * (radius + barHeight);
+            let y = centerX - Math.cos(rads * i + 0) * radius;
+            let x = centerY + Math.sin(rads * i + 0) * radius;
+            let y_end = centerX - Math.cos(rads * i + 0) * (radius + barHeight);
+            let x_end = centerY + Math.sin(rads * i + 0) * (radius + barHeight);
 
             drawBar(ctx, x, y, x_end, y_end, barWidth);
         }
@@ -264,31 +198,18 @@ const Visualizer = ({ idx, setIdx, autoplay, setAutoplay, bgLoaded, trackCount }
 
     const tick = () => {
         visualize();
-        // analyser.getByteTimeDomainData(songData);
         analyser.getByteFrequencyData(songData);
-        // let newArray = new Uint8Array(analyser.frequencyBinCount);
-        // analyser.getByteTimeDomainData(newArray);
-        // analyser.getByteTimeDomainData(freqArr);
-        // console.log(newArray.current.buffer);
-        // setSongData(newArray.buffer);
         rafRef.current = requestAnimationFrame(tick);
     };
 
-    const cleanUp = () => {
-        cancelAnimationFrame(rafRef.current);
-        // analyser.disconnect();
-        // source.disconnect();
-    }
-
     const nextTrack = () => {
-        // cleanUp();
         setAutoplay(true);
         if (idx === trackCount - 1) {
             setIdx(0);
         } else {
             setIdx(idx + 1);
         }
-    }
+    };
 
     const prevTrack = () => {
         setAutoplay(true);
@@ -297,12 +218,7 @@ const Visualizer = ({ idx, setIdx, autoplay, setAutoplay, bgLoaded, trackCount }
         } else {
             setIdx(idx - 1);
         }
-    }
-
-    const removePlayer = () => {
-        // cleanUp();
-        setIdx(-1);
-    }
+    };
 
     return (
         <VizContainer>
@@ -310,21 +226,20 @@ const Visualizer = ({ idx, setIdx, autoplay, setAutoplay, bgLoaded, trackCount }
                 <canvas ref={canvasRef} width={cWidth} height={cHeight} />
             </VizCanvas>
             <VizControl>
-                <img src={iconPrev} alt='prev' onClick={prevTrack} />
-                <img src={playing ? iconPause : iconPlay} alt={playing ? 'pause' : 'play'} onClick={togglePlay} />
-                <img src={iconNext} alt='next' onClick={nextTrack} />
-            </VizControl> 
+                <img src={iconPrev} alt="prev" onClick={prevTrack} />
+                <img
+                    src={playing ? iconPause : iconPlay}
+                    alt={playing ? 'pause' : 'play'}
+                    onClick={togglePlay}
+                />
+                <img src={iconNext} alt="next" onClick={nextTrack} />
+            </VizControl>
             <VizAlbum>
                 <VizAlbumText>
                     {musicInfo[idx]['album']} ({musicInfo[idx]['year']})
                 </VizAlbumText>
-                {/* <div onClick={togglePlay}>Placeholder Txt</div>
-                <div onClick={nextTrack}>Next</div>
-                <div onClick={removePlayer}>Stop</div> */}
                 <img src={images[`img${idx + 1}`]['file']} alt="albumart" />
             </VizAlbum>
-            {/* <canvas id='bgimg' /> */}
-
         </VizContainer>
     );
 };

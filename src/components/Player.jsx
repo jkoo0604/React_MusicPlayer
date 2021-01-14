@@ -1,10 +1,4 @@
-// import background and visualizer
-// pick random image pass into background and visualizer as album image
-// send track info to visualizer
-// create final player  with controls
-// usestate to create playlist (start with 0)
-
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import Background from './Background';
@@ -14,8 +8,6 @@ import musicInfo from '../utils/musicInfo';
 const StyledContainer = styled.div`
     width: 100%;
     height: 100%;
-    // width: calc(100vw);
-    // min-height: calc(100vh);
     position: relative;
 `;
 
@@ -45,9 +37,12 @@ const Player = () => {
 
     return (
         <StyledContainer>
-            {/* {
-                idx === -1 ? <></> : <> */}
-                <Background idx={idx} setIdx={setIdx} bgLoaded={bgLoaded} setBgLoaded={setBgLoaded} />
+            <Background
+                idx={idx}
+                setIdx={setIdx}
+                bgLoaded={bgLoaded}
+                setBgLoaded={setBgLoaded}
+            />
             <Visualizer
                 idx={idx}
                 setIdx={setIdx}
@@ -56,12 +51,37 @@ const Player = () => {
                 bgLoaded={bgLoaded}
                 trackCount={trackCount}
             />
-            {/* </>
-            } */}
             <CreditsContainer>
-                <CreditsDiv>Music from <a href='https://stock.adobe.com/audio' target='_blank' rel='noopener noreferrer'>Adobe Stock Audio</a></CreditsDiv>
-                <CreditsDiv>Images by <a href='https://unsplash.com/@wolfgang_hasselmann' target='_blank' rel='noopener noreferrer'>Wolfgang Hasselmann</a></CreditsDiv>
-                <CreditsDiv>Icons from <a href='https://icons8.com' target='_blank' rel='noopener noreferrer'>Icons8</a></CreditsDiv>
+                <CreditsDiv>
+                    Music from{' '}
+                    <a
+                        href="https://stock.adobe.com/audio"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Adobe Stock Audio
+                    </a>
+                </CreditsDiv>
+                <CreditsDiv>
+                    Images by{' '}
+                    <a
+                        href="https://unsplash.com/@wolfgang_hasselmann"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Wolfgang Hasselmann
+                    </a>
+                </CreditsDiv>
+                <CreditsDiv>
+                    Icons from{' '}
+                    <a
+                        href="https://icons8.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Icons8
+                    </a>
+                </CreditsDiv>
             </CreditsContainer>
         </StyledContainer>
     );

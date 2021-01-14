@@ -1,7 +1,3 @@
-// get image from prop (sent by player)
-// get color data for center of image only
-// create gradient background using the dominent color
-
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
@@ -23,9 +19,6 @@ const StyledBg = styled.div`
         0% {
             background-position: 0% 100%;
         }
-        // 50% {
-        //     background-position: 100% 50%;
-        // }
         100% {
             background-position: 100% 0%;
         }
@@ -48,37 +41,18 @@ const StyledBg = styled.div`
 
 const Background = ({ idx, setIdx, bgLoaded, setBgLoaded }) => {
     const [colors, setColors] = useState([]);
-    console.log(images[`img${idx + 1}`]);
 
     useEffect(() => {
-        // get dominant colors
-        // set colors
         const colorGrab = async () => {
             setBgLoaded(false);
             let imgColors = await grabColors(images[`img${idx + 1}`]['file']);
-            console.log(imgColors);
             setColors(imgColors);
             setBgLoaded(true);
         };
         colorGrab();
-    }, [idx]);
+    }, [idx, setBgLoaded]);
 
-    const nextImg = () => {
-        setIdx(idx + 1);
-    }
-
-    // return !bgLoaded ? (
-    //     <StyledBg></StyledBg>
-    // ) : (
-    //     <StyledBg colors={colors.join(', ')}>
-    //         {/* <img src={images[`img${idx + 1}`]['file']} alt="albumart" onClick={nextImg}/> */}
-    //     </StyledBg>
-    // );
-    return (
-        <StyledBg colors={colors.join(', ')}>
-            {/* <img src={images[`img${idx + 1}`]['file']} alt="albumart" onClick={nextImg}/> */}
-        </StyledBg>
-    );
+    return <StyledBg colors={colors.join(', ')} />;
 };
 
 export default Background;
