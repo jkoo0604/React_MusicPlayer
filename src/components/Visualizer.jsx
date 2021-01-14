@@ -19,7 +19,7 @@ const numBars = 100;
 const cWidth = 500;
 const cHeight = 500;
 const radius = 150;
-const barWidth = 2;
+const barWidth = 15;
 const barSpacing = 5;
 // let freqArr;
 
@@ -223,14 +223,22 @@ const Visualizer = ({ idx, setIdx, autoplay, setAutoplay, bgLoaded, trackCount }
 
         // redraw bars
         for (let i = 0; i < numBars; i++) {
-            barHeight = songData[i] * 0.5;
+            barHeight = songData[i] * 0.4;
             // barHeight = freqArr[i] * 0.5;
 
             let rads = (Math.PI * 2) / numBars;
-            let x = centerX + Math.cos(rads * i) * radius;
-            let y = centerY + Math.sin(rads * i) * radius;
-            let x_end = centerX + Math.cos(rads * i) * (radius + barHeight);
-            let y_end = centerY + Math.sin(rads * i) * (radius + barHeight);
+            let y = centerX - Math.cos((rads * i + 0)) * radius;
+            let x = centerY + Math.sin((rads * i + 0)) * radius;
+            let y_end = centerX - Math.cos((rads * i + 0)) * (radius + barHeight);
+            let x_end = centerY + Math.sin((rads * i + 0)) * (radius + barHeight);
+            // let x = centerX + Math.cos((rads + 180) * i) * radius;
+            // let y = centerY + Math.sin((rads + 180) * i) * radius;
+            // let x_end = centerX + Math.cos((rads + 180) * i) * (radius + barHeight);
+            // let y_end = centerY + Math.sin((rads + 180) * i) * (radius + barHeight);
+            // let x = centerX + Math.cos(rads * i) * radius;
+            // let y = centerY + Math.sin(rads * i) * radius;
+            // let x_end = centerX + Math.cos(rads * i) * (radius + barHeight);
+            // let y_end = centerY + Math.sin(rads * i) * (radius + barHeight);
 
             drawBar(ctx, x, y, x_end, y_end, barWidth);
         }
