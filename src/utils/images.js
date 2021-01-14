@@ -4,7 +4,7 @@ const images = {
         orientation: 'vertical',
     },
     img2: {
-        file: require('../assets/images/2.jpg').default,
+        file: require('../assets/images/7.jpg').default,
         orientation: 'horizontal',
     },
     img3: {

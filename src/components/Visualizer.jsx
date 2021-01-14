@@ -10,6 +10,7 @@
 // controll button hover action (scale up)
 // album image white box shadow cut off at enge of outer div
 // song title and artist pixelated (use div?)
+// add credits (music, image, icons)
 
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
@@ -28,6 +29,7 @@ const cHeight = 500;
 const radius = 150;
 const barWidth = 15;
 const barSpacing = 5;
+const offsetY = 30;
 // let freqArr;
 
 const VizContainer = styled.div`
@@ -195,7 +197,6 @@ const Visualizer = ({ idx, setIdx, autoplay, setAutoplay, bgLoaded, trackCount }
         const ctx = canvas.getContext('2d');
         const centerX = cWidth / 2;
         const centerY = cHeight / 2;
-        let offsetY = 30;
         let barHeight, maxBarNum, slicedPercent, barNum, freqJump;
 
         // clear canvas
@@ -322,6 +323,8 @@ const Visualizer = ({ idx, setIdx, autoplay, setAutoplay, bgLoaded, trackCount }
                 <div onClick={removePlayer}>Stop</div> */}
                 <img src={images[`img${idx + 1}`]['file']} alt="albumart" />
             </VizAlbum>
+            {/* <canvas id='bgimg' /> */}
+
         </VizContainer>
     );
 };

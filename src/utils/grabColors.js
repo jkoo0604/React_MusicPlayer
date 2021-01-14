@@ -15,6 +15,7 @@ const grabColors = async (imgUrl) => {
         colors = {};
     r = g = b = a = 0;
     const canvas = document.createElement('canvas');
+    // const canvas = document.getElementById('bgimg');
     const c = canvas.getContext('2d');
 
     const imgLoad = new Promise((resolve) => {
@@ -28,8 +29,11 @@ const grabColors = async (imgUrl) => {
     h = imgFile.height / 3;
     c.width = w;
     c.height = h;
-    c.drawImage(imgFile, w, h, w, h, 0, 0, w, h);
+    // canvas.width = w * 2;
+    // canvas.height = h * 2;
+    c.drawImage(imgFile, w, h, c.width, c.height, 0, 0, c.width, c.height);
     imgData = c.getImageData(0, 0, c.width, c.height);
+    console.log('width', w, c.width, 'height', h, c.height);
     // console.log(imgData.data[0], imgData.data[1], imgData.data[2]);
     for (let i = 0, data = imgData.data; i < data.length; i += 4) {
         r = data[i];
