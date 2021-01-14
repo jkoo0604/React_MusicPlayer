@@ -11,11 +11,13 @@ import images from '../utils/images';
 const StyledBg = styled.div`
     width: 100%;
     height: 100%;
-    position: absolute;
+    position: fixed;
+    top: 0;
+    left: 0;
     background: #000;
     background-image: ${({ colors }) => `linear-gradient(45deg, ${colors})`};
     background-size: 200% 200%;
-    animation: gradient 15s ease-in-out infinite alternate;
+    animation: gradient 8s ease-in-out infinite alternate;
 
     @keyframes gradient {
         0% {

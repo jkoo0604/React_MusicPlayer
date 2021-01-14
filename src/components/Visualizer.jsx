@@ -64,23 +64,33 @@ const VizControl = styled.div`
 
     img {
         height: 24px;
+        // transition: all 0.2s ease-in-out;
+    }
+
+    img:hover {
+        transform: scale(1.2);
+    }
+
+    img:active {
+        opacity: 0.5;
     }
 `;
 
 const VizAlbum = styled.div`
-    height: 200px;
+    min-height: 200px;
     width: 250px;
     margin: 20px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
+    padding-bottom: 30px;
     
     img {
         border-radius: 4px;
-        max-height: 100%;
+        max-height: 200px;
         max-width: 100%;
-        box-shadow: 0 10px 80px 20px rgba(255, 255, 255, 0.15), 2px 2px 8px -2px rgba(0, 0, 0, 1);
+        box-shadow: 0 10px 60px 20px rgba(255, 255, 255, 0.15), 2px 2px 8px -2px rgba(0, 0, 0, 1);
         // box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
     }
 `;

@@ -12,8 +12,11 @@ import Visualizer from './Visualizer';
 import musicInfo from '../utils/musicInfo';
 
 const StyledContainer = styled.div`
-    width: calc(100vw);
-    height: calc(100vh);
+    width: 100%;
+    height: 100%;
+    // width: calc(100vw);
+    // min-height: calc(100vh);
+    position: relative;
 `;
 
 const Player = () => {
