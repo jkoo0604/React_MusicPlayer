@@ -1,5 +1,6 @@
 *.numbers
 */assets
+*/config
 
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
@@ -27,6 +28,15 @@ yarn-error.log*
 
 # Created by https://www.toptal.com/developers/gitignore/api/macos,vscode,node,react
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,vscode,node,react
+
+### Firebase ###
+.idea
+**/node_modules/*
+**/.firebaserc
+
+### Firebase Patch ###
+.runtimeconfig.json
+.firebase/
 
 ### macOS ###
 # General

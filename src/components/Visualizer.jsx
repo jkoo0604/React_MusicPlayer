@@ -4,6 +4,13 @@
 // display circular visualizer with title, artist, and album image in the center?
 // or title and artist only in the center with album image and control below
 
+// speed up background color movement
+// padding below album image
+// white space at the bottom
+// controll button hover action (scale up)
+// album image white box shadow cut off at enge of outer div
+// song title and artist pixelated (use div?)
+
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
